@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -20,24 +22,35 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _birthdateController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmpasswordController = TextEditingController();
   bool _isExistingUser = false;
 
   void _signUp() {
     String name = _nameController.text;
     String birthdate = _birthdateController.text;
+    String email = _emailController.text;
+    String phone = _phoneController.text;
+    String password = _passwordController.text;
+    String confirmPassword = _confirmpasswordController.text;
 
     // In a real application, you would validate and store the data as needed.
     print("Name: $name");
     print("Birthdate: $birthdate");
+    print("Email: $email");
     print("Is Existing User: $_isExistingUser");
-
+    print("Phone: $phone");
+    print("Password: $password");
+    print("Confirm Password: $confirmPassword");
     // You can add further logic to handle user registration.
   }
 
   void _signInWithGoogle() async {
     try {
       // Use the GoogleSignIn class to initiate Google Sign-In.
-      final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
       if (googleUser != null) {
         print("Google Sign-In successful.");
@@ -71,9 +84,42 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
             SizedBox(height: 16.0),
             TextField(
+              keyboardType: TextInputType.datetime,
               controller: _birthdateController,
               decoration: InputDecoration(
                 labelText: "Birthdate",
+              ),
+            ),
+            SizedBox(height: 16.0),
+            TextField(
+              keyboardType: TextInputType.emailAddress,
+              controller: _emailController,
+              decoration: InputDecoration(
+                labelText: "Email",
+              ),
+            ),
+            SizedBox(height: 16.0),
+            TextField(
+              keyboardType: TextInputType.phone,
+              controller: _phoneController,
+              decoration: InputDecoration(
+                labelText: "Phone",
+              ),
+            ),
+            SizedBox(height: 16.0),
+             TextField(
+              obscureText: true,
+              controller: _passwordController,
+              decoration: InputDecoration(
+                labelText: "Password",
+              ),
+            ),
+            SizedBox(height: 16.0),
+            TextField(
+              obscureText: true,
+              controller: _confirmpasswordController,
+              decoration: InputDecoration(
+                labelText: "Confirm Password",
               ),
             ),
             SizedBox(height: 16.0),
@@ -100,12 +146,7 @@ class _SignUpPageState extends State<SignUpPage> {
               onPressed: _signInWithGoogle,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Image.asset(
-                    "assets/google_logo.png", // Add the path to your Google logo image
-                    height: 24.0,
-                  ),
-                  SizedBox(width: 8.0),
+                children: [
                   Text("Sign In with Google"),
                 ],
               ),
