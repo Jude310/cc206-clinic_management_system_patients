@@ -26,8 +26,10 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmpasswordController = TextEditingController();
-  bool _isExistingUser = false;
 
+  void _logIn () {
+    
+  }
   void _signUp() {
     String name = _nameController.text;
     String birthdate = _birthdateController.text;
@@ -35,12 +37,12 @@ class _SignUpPageState extends State<SignUpPage> {
     String phone = _phoneController.text;
     String password = _passwordController.text;
     String confirmPassword = _confirmpasswordController.text;
+    
 
     // In a real application, you would validate and store the data as needed.
     print("Name: $name");
     print("Birthdate: $birthdate");
     print("Email: $email");
-    print("Is Existing User: $_isExistingUser");
     print("Phone: $phone");
     print("Password: $password");
     print("Confirm Password: $confirmPassword");
@@ -123,23 +125,14 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
             ),
             SizedBox(height: 16.0),
-            Row(
-              children: <Widget>[
-                Checkbox(
-                  value: _isExistingUser,
-                  onChanged: (value) {
-                    setState(() {
-                      _isExistingUser = value ?? false;
-                    });
-                  },
-                ),
-                Text("I am an existing user"),
-              ],
-            ),
-            SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: _signUp,
               child: Text("Sign Up"),
+            ),
+            SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: _logIn,
+              child: Text("Login"),
             ),
             SizedBox(height: 16.0),
             OutlinedButton(
