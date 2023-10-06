@@ -3,8 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-void main() => runApp(SignUpApp());
-
 class SignUpApp extends StatelessWidget {
   void _logIn() {}
   void _signUp() {}
