@@ -8,7 +8,7 @@ void main() => runApp(SignUpApp());
 class SignUpApp extends StatelessWidget {
   void _logIn() {}
   void _signUp() {}
-  void _signInWithGoogle() async {}
+  void _signInWithGoogle() {}
 
   @override
   Widget build(BuildContext context) {
