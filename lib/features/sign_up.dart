@@ -6,66 +6,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 void main() => runApp(SignUpApp());
 
 class SignUpApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: SignUpPage(),
-    );
-  }
-}
-
-class SignUpPage extends StatefulWidget {
-  @override
-  _SignUpPageState createState() => _SignUpPageState();
-}
-
-class _SignUpPageState extends State<SignUpPage> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _birthdateController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmpasswordController = TextEditingController();
-
-  void _logIn () {
-    
-  }
-  void _signUp() {
-    String name = _nameController.text;
-    String birthdate = _birthdateController.text;
-    String email = _emailController.text;
-    String phone = _phoneController.text;
-    String password = _passwordController.text;
-    String confirmPassword = _confirmpasswordController.text;
-    
-
-    // In a real application, you would validate and store the data as needed.
-    print("Name: $name");
-    print("Birthdate: $birthdate");
-    print("Email: $email");
-    print("Phone: $phone");
-    print("Password: $password");
-    print("Confirm Password: $confirmPassword");
-    // You can add further logic to handle user registration.
-  }
-
-  void _signInWithGoogle() async {
-    try {
-      // Use the GoogleSignIn class to initiate Google Sign-In.
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-      if (googleUser != null) {
-        print("Google Sign-In successful.");
-        print("User ID: ${googleUser.id}");
-        print("User Display Name: ${googleUser.displayName}");
-        print("User Email: ${googleUser.email}");
-      } else {
-        print("Google Sign-In canceled.");
-      }
-    } catch (error) {
-      print("Error signing in with Google: $error");
-    }
-  }
+  void _logIn() {}
+  void _signUp() {}
+  void _signInWithGoogle() async {}
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +22,6 @@ class _SignUpPageState extends State<SignUpPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             TextField(
-              controller: _nameController,
               decoration: InputDecoration(
                 labelText: "Name",
               ),
@@ -87,7 +29,6 @@ class _SignUpPageState extends State<SignUpPage> {
             SizedBox(height: 16.0),
             TextField(
               keyboardType: TextInputType.datetime,
-              controller: _birthdateController,
               decoration: InputDecoration(
                 labelText: "Birthdate",
               ),
@@ -95,7 +36,6 @@ class _SignUpPageState extends State<SignUpPage> {
             SizedBox(height: 16.0),
             TextField(
               keyboardType: TextInputType.emailAddress,
-              controller: _emailController,
               decoration: InputDecoration(
                 labelText: "Email",
               ),
@@ -103,15 +43,13 @@ class _SignUpPageState extends State<SignUpPage> {
             SizedBox(height: 16.0),
             TextField(
               keyboardType: TextInputType.phone,
-              controller: _phoneController,
               decoration: InputDecoration(
                 labelText: "Phone",
               ),
             ),
             SizedBox(height: 16.0),
-             TextField(
+            TextField(
               obscureText: true,
-              controller: _passwordController,
               decoration: InputDecoration(
                 labelText: "Password",
               ),
@@ -119,7 +57,6 @@ class _SignUpPageState extends State<SignUpPage> {
             SizedBox(height: 16.0),
             TextField(
               obscureText: true,
-              controller: _confirmpasswordController,
               decoration: InputDecoration(
                 labelText: "Confirm Password",
               ),
