@@ -62,22 +62,22 @@ class SignUpApp extends StatelessWidget {
             SizedBox(height: 16.0),
             ElevatedButton(
                 onPressed: _signUp,
-                child: Text("Sign Up"),
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF43C6AC),
-                    foregroundColor: Colors.black)),
+                    foregroundColor: Colors.black),
+                child: Text("Sign Up")),
             SizedBox(height: 16.0),
             ElevatedButton(
                 onPressed: _logIn,
-                child: Text("Login"),
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF43C6AC),
-                    foregroundColor: Colors.black)),
+                    foregroundColor: Colors.black),
+                child: Text("Login")),
             SizedBox(height: 16.0),
             OutlinedButton(
                 onPressed: _signInWithGoogle,
-                child: Text("Sign In with Google"),
-                style: OutlinedButton.styleFrom(foregroundColor: Colors.black)),
+                style: OutlinedButton.styleFrom(foregroundColor: Colors.black),
+                child: Text("Sign In with Google")),
           ],
         ),
       ),
