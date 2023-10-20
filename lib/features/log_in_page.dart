@@ -43,16 +43,27 @@ class LogInPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20.0),
-          ElevatedButton(
-            onPressed: () {
-              // Submit Login function
-            },
-            child: const Text('Login'),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 45.0),
+            child: ElevatedButton(
+              onPressed: () {
+                // Submit Login function
+              },
+              child: const Text(
+                'Login',
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    Theme.of(context).colorScheme.primary),
+              ),
+            ),
           ),
-        const SizedBox(height: 10.0),
-        //make a hyperlink text
-        
-        const Text(
+          const SizedBox(height: 10.0),
+          //make a hyperlink text
+
+          const Text(
             'No account? Cick here to Sign up',
             style: TextStyle(
               fontSize: 12.0,
