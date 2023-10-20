@@ -12,7 +12,7 @@ class SignUpApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Sign Up Page"),
+        title: Center(child: Text("Sign Up Page")),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -61,24 +61,23 @@ class SignUpApp extends StatelessWidget {
             ),
             SizedBox(height: 16.0),
             ElevatedButton(
-              onPressed: _signUp,
-              child: Text("Sign Up"),
-            ),
+                onPressed: _signUp,
+                child: Text("Sign Up"),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF43C6AC),
+                    foregroundColor: Colors.black)),
             SizedBox(height: 16.0),
             ElevatedButton(
-              onPressed: _logIn,
-              child: Text("Login"),
-            ),
+                onPressed: _logIn,
+                child: Text("Login"),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF43C6AC),
+                    foregroundColor: Colors.black)),
             SizedBox(height: 16.0),
             OutlinedButton(
-              onPressed: _signInWithGoogle,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Sign In with Google"),
-                ],
-              ),
-            ),
+                onPressed: _signInWithGoogle,
+                child: Text("Sign In with Google"),
+                style: OutlinedButton.styleFrom(foregroundColor: Colors.black)),
           ],
         ),
       ),
