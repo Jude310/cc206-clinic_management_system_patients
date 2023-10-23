@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
           colorScheme: colorScheme1,
           useMaterial3: true,
         ),
+        debugShowCheckedModeBanner: false,
         home: LogInPage());
   }
 }
