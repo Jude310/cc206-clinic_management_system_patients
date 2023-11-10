@@ -9,38 +9,63 @@ class LogInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      
       children: <Widget>[
         Container(
-          width: MediaQuery.of(context).size.width,
+            width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-          child: Image.asset('assets/images/MainLogIn_BG 1.png', fit: BoxFit.cover,)),
+            color: Color.fromARGB(255, 245, 244, 243),
+            child: Opacity(
+              opacity: 0.90,
+              child: Image.asset(
+                'assets/images/LoginSignUp_BG (1) 1.png',
+                
+                fit: BoxFit.cover,
+              ),
+            )),
         Scaffold(
           backgroundColor: Colors.transparent,
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/logo/Farmacia 3.svg',
+                      width: 150,
+                    ),
+                    const Text(
+                      'Farmacia Hinosa',
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20.0),
+                const Text(
+                  'Welcome back!',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                  ),
+                  textAlign: TextAlign.start,
+                ),
+                const SizedBox(height: 10.0),
                 Form(
                   key: logInFormKey,
                   child: Column(
                     children: [
-                      SvgPicture.asset(
-                        'assets/logo/Farmacia 3.svg',
-                        width: 150,
-                      ),
-                      const Text(
-                        'Patient Login',
-                        style: TextStyle(
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 20.0),
                       TextFormField(
                         decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white.withOpacity(0.8),
                           border: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(30.0)),
@@ -53,9 +78,11 @@ class LogInPage extends StatelessWidget {
                           labelText: 'Username',
                         ),
                       ),
-                      const SizedBox(height: 20.0),
+                      const SizedBox(height: 10.0),
                       TextFormField(
                         decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white.withOpacity(0.8),
                           border: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(30.0)),
@@ -69,7 +96,7 @@ class LogInPage extends StatelessWidget {
                         ),
                         obscureText: true,
                       ),
-                      const SizedBox(height: 20.0),
+                      const SizedBox(height: 10.0),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 95.0),
                         child: ElevatedButton(
@@ -91,13 +118,19 @@ class LogInPage extends StatelessWidget {
                       const SizedBox(height: 10.0),
                       //make a hyperlink text
 
-                      const Text(
-                        'No account? Cick here to Sign up',
-                        style: TextStyle(
-                          fontSize: 12.0,
-                          decoration: TextDecoration.underline,
+                      GestureDetector(
+                        onTap: () => {
+// Navigator.push(signuppage);
+
+                        },
+                        child: const Text(
+                          'No account? Cick here to Sign up',
+                          style: TextStyle(
+                            fontSize: 12.0,
+                            decoration: TextDecoration.underline,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
                       ),
                     ],
                   ),
