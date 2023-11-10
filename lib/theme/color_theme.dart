@@ -28,3 +28,10 @@ const colorScheme1 = ColorScheme(
       ? Color(0xffFFFFFF)
       : Color(0xff601410),
 );
+
+
+final darkTheme = ThemeData(colorScheme: colorScheme1, useMaterial3: true);
+ 
+  
+
+  
