@@ -68,20 +68,13 @@ flutter:
     - family: Montserrat
       fonts:
         - asset: assets/fonts/Montserrat/static/Montserrat-Regular.ttf
-
         - asset: assets/fonts/Montserrat/static/Montserrat-Light.ttf
-
         - asset: assets/fonts/Montserrat/static/Montserrat-Thin.ttf
-
         - asset: assets/fonts/Montserrat/static/Montserrat-Bold.ttf
-
         - asset: assets/fonts/Montserrat/static/Montserrat-Medium.ttf
         - asset: assets/fonts/Montserrat/static/Montserrat-LightItalic.ttf
-
         - asset: assets/fonts/Montserrat/static/Montserrat-ThinItalic.ttf
-
         - asset: assets/fonts/Montserrat/static/Montserrat-BoldItalic.ttf
-
         - asset: assets/fonts/Montserrat/static/Montserrat-MediumItalic.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
