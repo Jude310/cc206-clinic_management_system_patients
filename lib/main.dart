@@ -12,10 +12,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Hinosa Sign Up Page',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        fontFamily: 'Montserrat',
         colorScheme: colorScheme1,
         useMaterial3: true,
+        
       ),
+
       home: SignUpApp(),
     );
   }
