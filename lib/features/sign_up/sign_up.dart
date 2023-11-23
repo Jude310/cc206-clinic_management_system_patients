@@ -22,10 +22,14 @@ class SignUpApp extends StatelessWidget {
             child: Center(
                 child: SingleChildScrollView(
               child: Column(
-                children: const[
-                  Text(
-                    'Let\'s get you set up!',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                children: const [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Let\'s get you set up!',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
                   ),
                   SignUpForm()
                 ],
@@ -55,7 +59,7 @@ class _SignUpFormState extends State<SignUpForm> {
   TextEditingController _lastNameController = TextEditingController();
   TextEditingController _suffixController = TextEditingController();
   TextEditingController _birthdateController = TextEditingController();
-  String _sexController = 'Male';
+  String? _sexController = 'Male';
 
   Future<void> _selectDate() async {
     DateTime? selectedDate = await showDatePicker(
@@ -134,45 +138,15 @@ class _SignUpFormState extends State<SignUpForm> {
                 ),
                 SizedBox(width: 6.0),
                 Flexible(
-                  child: Column(
-                    children: [
-                      
-                      DropdownButtonFormField(
-                        elevation: 6,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white.withOpacity(0.95),
-                          contentPadding:
-                              EdgeInsets.symmetric(vertical: 15.0, horizontal: 20),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                          ),
-                        ),
-                        items: const [
-                          DropdownMenuItem(
-                            value: 'Male',
-                            child: Text('Male'),
-                          ),
-                          DropdownMenuItem(
-                            value: 'Female',
-                            child: Text('Female'),
-                          ),
-                          DropdownMenuItem(
-                            value: 'Others',
-                            child: Text('Others'),
-                          ),
-                        ],
-                        onChanged: (value) => _sexController = value.toString(),
-                      ),
-                    ],
+                  child: SignUpDropDownFormField(
+                    label: 'Sex',
+                    onChanged: (value) => _sexController = value,
                   ),
                 ),
               ],
             ),
             SizedBox(height: 16.0),
-            
             SizedBox(height: 16.0),
-            
             Align(
               alignment: Alignment.centerRight,
               child: ElevatedButton(
@@ -187,5 +161,85 @@ class _SignUpFormState extends State<SignUpForm> {
         ),
       );
     });
+  }
+}
+
+class SignUpDropDownFormField extends StatefulWidget {
+  final String label;
+  final void Function(String?)? onChanged;
+  const SignUpDropDownFormField(
+      {this.label = '', required this.onChanged, super.key});
+
+  @override
+  State<SignUpDropDownFormField> createState() =>
+      _SignUpDropDownFormFieldState();
+}
+
+class _SignUpDropDownFormFieldState extends State<SignUpDropDownFormField> {
+  final FocusNode _focusNode = FocusNode();
+  bool _hasFocus = false;
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(() {
+      setState(() {
+        _hasFocus = _focusNode.hasFocus;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    // Clean up the focus node when the Form is disposed.
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          widget.label,
+          textAlign: TextAlign.start,
+          style: TextStyle(
+            color:
+                !_hasFocus ? colorScheme1.onBackground : colorScheme1.primary,
+            fontSize: 14.0,
+            fontWeight: !_hasFocus ? FontWeight.w500 : FontWeight.w600,
+          ),
+          overflow: TextOverflow.fade,
+        ),
+        DropdownButtonFormField(
+          isExpanded: true,
+          elevation: 6,
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: Colors.white.withOpacity(0.95),
+            contentPadding:
+                EdgeInsets.symmetric(vertical: 15.0, horizontal: 20),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+            ),
+          ),
+          items: const [
+            DropdownMenuItem(
+              value: 'Male',
+              child: Text('Male'),
+            ),
+            DropdownMenuItem(
+              value: 'Female',
+              child: Text('Female'),
+            ),
+            DropdownMenuItem(
+              value: 'Others',
+              child: Text('Others'),
+            ),
+          ],
+          onChanged: (value) => widget.onChanged,
+        ),
+      ],
+    );
   }
 }
