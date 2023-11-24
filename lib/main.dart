@@ -1,4 +1,4 @@
-import 'package:cc206_clinic_management_website_patients/features/sign_up/sign_up.dart';
+import 'package:cc206_clinic_management_website_patients/features/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'theme/color_theme.dart';
 
@@ -17,9 +17,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Montserrat',
         colorScheme: colorScheme1,
         useMaterial3: true,
-        
       ),
-
       home: SignUpApp(),
     );
   }
