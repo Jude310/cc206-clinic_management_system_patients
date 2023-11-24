@@ -2,6 +2,8 @@ import 'package:cc206_clinic_management_website_patients/theme/color_theme.dart'
 import 'package:flutter/material.dart';
 import 'features/sign_up/sign_up.dart';
 import 'features/log_in/log_in_page.dart';
+import 'theme/color_theme.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -48,5 +50,6 @@ class AppNavigator extends StatelessWidget {
         return MaterialPageRoute(builder: (context) => page);
       },
     );
+
   }
 }
