@@ -3,6 +3,7 @@
 import 'package:cc206_clinic_management_website_patients/theme/color_theme.dart';
 import 'package:flutter/material.dart';
 import '../components/sign_up_form_input_widget.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class SignUpApp extends StatelessWidget {
   @override
@@ -22,13 +23,17 @@ class SignUpApp extends StatelessWidget {
             child: Center(
                 child: SingleChildScrollView(
               child: Column(
-                children: const [
+                children: [
+                  SvgPicture.asset(
+                    'logo/logo_1.svg',
+                    width: 150,
+                  ),
                   Align(
                     alignment: Alignment.center,
                     child: Text(
                       'Let\'s get you set up!',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 20),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                   ),
                   SignUpForm()
@@ -54,12 +59,12 @@ class _SignUpFormState extends State<SignUpForm> {
   void _signUp() {}
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController _firstNameController = TextEditingController();
-  TextEditingController _middleNameController = TextEditingController();
-  TextEditingController _lastNameController = TextEditingController();
-  TextEditingController _suffixController = TextEditingController();
-  TextEditingController _birthdateController = TextEditingController();
-  String? _sexController = 'Male';
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _middleNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _suffixController = TextEditingController();
+  final TextEditingController _birthdateController = TextEditingController();
+  String _sexController = 'Male';
 
   Future<void> _selectDate() async {
     DateTime? selectedDate = await showDatePicker(
@@ -140,7 +145,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 Flexible(
                   child: SignUpDropDownFormField(
                     label: 'Sex',
-                    onChanged: (value) => _sexController = value,
+                    onChanged: (value) => _sexController = value!,
                   ),
                 ),
               ],
@@ -190,7 +195,6 @@ class _SignUpDropDownFormFieldState extends State<SignUpDropDownFormField> {
 
   @override
   void dispose() {
-    // Clean up the focus node when the Form is disposed.
     _focusNode.dispose();
     super.dispose();
   }
@@ -231,10 +235,6 @@ class _SignUpDropDownFormFieldState extends State<SignUpDropDownFormField> {
             DropdownMenuItem(
               value: 'Female',
               child: Text('Female'),
-            ),
-            DropdownMenuItem(
-              value: 'Others',
-              child: Text('Others'),
             ),
           ],
           onChanged: (value) => widget.onChanged,
