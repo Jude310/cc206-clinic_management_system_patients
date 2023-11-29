@@ -1,3 +1,4 @@
+import 'package:cc206_clinic_management_website_patients/components/dashboard.dart';
 import 'package:cc206_clinic_management_website_patients/features/sign_up/sign_up.dart';
 import 'package:cc206_clinic_management_website_patients/theme/color_theme.dart';
 import 'package:flutter/material.dart';
@@ -99,7 +100,11 @@ class LogInPage extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 95.0),
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context)=> DashBoard()));
+                          },
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
                                 colorScheme1.tertiary),

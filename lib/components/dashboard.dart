@@ -3,26 +3,13 @@ import 'profile.dart';
 import 'settings.dart';
 import 'appointment_form.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
+class DashBoard extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: MyHomePage(),
-    );
-  }
+  _DashBoardState createState() => _DashBoardState();
 }
 
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _currentIndex = 0;
+class _DashBoardState extends State<DashBoard> {
+  int _currentIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +26,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _getBody() {
     switch (_currentIndex) {
       case 0:
-        return const ProfileScreen();
+        return const MyProfile();
       case 1:
         return _getDashboardScreen(); // Use a separate function for the dashboard
       case 2:
@@ -93,13 +80,27 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _getDashboardScreen() {
     return Center(
-      child: Column(
+       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text('Home Page'),
+          const Card(
+            child: SizedBox(
+            height: 100,
+            width: 300,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Welcome Angel Jude Diones',
+              textAlign: TextAlign.center,),
+              ]            
+            ),
+            ),
+          ),
+          const Text('Appointment History',
+          textAlign: TextAlign.center,),
           const SizedBox(height: 20),
         ],
-      ),
+          ),
     );
   }
 }
