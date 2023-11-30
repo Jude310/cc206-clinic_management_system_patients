@@ -20,9 +20,6 @@ class _DashBoardState extends State<DashBoard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Navigation App'),
-      ),
       body: _getBody(),
       bottomNavigationBar: _getBottomNavigationBar(),
       floatingActionButton: _getFloatingActionButton(),
