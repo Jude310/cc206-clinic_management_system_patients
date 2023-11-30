@@ -1,3 +1,4 @@
+import 'package:cc206_clinic_management_website_patients/features/log_in/log_in_page.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -42,7 +43,7 @@ class SettingsScreen extends StatelessWidget {
             const SizedBox(height: 8),
             ElevatedButton(
               onPressed: () {
-                // Perform Logout
+                _logOut(context);
               },
               child: ListTile(
                 leading: Icon(Icons.exit_to_app),
@@ -52,7 +53,7 @@ class SettingsScreen extends StatelessWidget {
             const SizedBox(height: 8),
             ElevatedButton(
               onPressed: () {
-                // Navigate to Account Deletion Request
+                _showDeleteAccountConfirmation(context);
               },
               child: ListTile(
                 leading: Icon(Icons.delete),
@@ -121,5 +122,57 @@ class SettingsScreen extends StatelessWidget {
         );
       },
     );
+  }
+
+  void _showDeleteAccountConfirmation(BuildContext context) {
+    TextEditingController confirmationController = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Confirm Deletion'),
+          content: Column(
+            children: [
+              Text('To confirm, type "Farmacia Hinosa"'),
+              const SizedBox(height: 8),
+              TextFormField(
+                controller: confirmationController,
+                decoration: InputDecoration(labelText: 'Confirmation'),
+              ),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('Cancel'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (confirmationController.text == 'Farmacia Hinosa') {
+                        // Implement logic for account deletion
+                        Navigator.pop(context);
+                      } else {
+                        // Handle incorrect confirmation
+                        // You might want to show an error message
+                      }
+                    },
+                    child: Text('Confirm'),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _logOut(BuildContext context) {
+    // Implement logic to log out
+    // For now, just navigate back to the login page
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LogInPage()));
   }
 }
