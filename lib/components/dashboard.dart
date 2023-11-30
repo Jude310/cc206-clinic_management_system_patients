@@ -8,6 +8,12 @@ class DashBoard extends StatefulWidget {
   _DashBoardState createState() => _DashBoardState();
 }
 
+final List<String> appointmentHistories = [
+    'Appointment 1 - Date 1',
+    'Appointment 2 - Date 2',
+    // Add more appointments as needed
+  ];
+
 class _DashBoardState extends State<DashBoard> {
   int _currentIndex = 1;
 
@@ -26,7 +32,7 @@ class _DashBoardState extends State<DashBoard> {
   Widget _getBody() {
     switch (_currentIndex) {
       case 0:
-        return const MyProfile();
+        return MyProfile();
       case 1:
         return _getDashboardScreen(); // Use a separate function for the dashboard
       case 2:
@@ -78,29 +84,78 @@ class _DashBoardState extends State<DashBoard> {
     }
   }
 
-  Widget _getDashboardScreen() {
-    return Center(
-       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Card(
-            child: SizedBox(
-            height: 100,
-            width: 300,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Welcome Angel Jude Diones',
-              textAlign: TextAlign.center,),
-              ]            
+ Widget _getDashboardScreen() {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Card(
+              elevation: 5,
+              margin: EdgeInsets.all(16),
+              child: Container(
+                height: 150,
+                padding: EdgeInsets.all(16),
+                child: Center(
+                  child: Text(
+                    'Welcome Angel Jude Diones',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
             ),
+            SizedBox(height: 20),
+            Card(
+              elevation: 5,
+              margin: EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    child: Text(
+                      'Appointment History',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Divider(),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: appointmentHistories.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(appointmentHistories[index]),
+                        trailing: ElevatedButton(
+                          onPressed: () {
+                            // Handle the view button press
+                            // You can navigate to another screen or show details
+                            // related to the selected appointment.
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.blue, // Change button color
+                          ),
+                          child: Text(
+                            'View',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.white, // Change text color
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
-          ),
-          const Text('Appointment History',
-          textAlign: TextAlign.center,),
-          const SizedBox(height: 20),
-        ],
-          ),
-    );
+          ],
+        ),
+      );
   }
 }
