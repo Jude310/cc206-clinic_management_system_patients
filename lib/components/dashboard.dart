@@ -1,4 +1,6 @@
+import 'package:cc206_clinic_management_website_patients/theme/color_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'profile.dart';
 import 'settings.dart';
 import 'appointment_form.dart';
@@ -8,11 +10,20 @@ class DashBoard extends StatefulWidget {
   _DashBoardState createState() => _DashBoardState();
 }
 
-final List<String> appointmentHistories = [
-    'Appointment 1 - Date 1',
-    'Appointment 2 - Date 2',
-    // Add more appointments as needed
-  ];
+class AppointmentHistory {
+  final String title;
+  final DateTime date;
+  AppointmentHistory(this.title, this.date);
+}
+
+final List<AppointmentHistory> appointmentHistories = [
+  AppointmentHistory('test', DateTime( 2021, 10, 1)),
+  AppointmentHistory('test', DateTime( 2021, 10, 1)),
+  AppointmentHistory('test', DateTime( 2021, 10, 1)),
+  AppointmentHistory('test', DateTime( 2021, 10, 1)),
+  
+  // Add more appointments as needed
+];
 
 class _DashBoardState extends State<DashBoard> {
   int _currentIndex = 1;
@@ -66,7 +77,11 @@ class _DashBoardState extends State<DashBoard> {
 
   Widget? _getFloatingActionButton() {
     if (_currentIndex == 1) {
-      return FloatingActionButton(
+      return FloatingActionButton.extended(
+        label: Text('Book Appointment'),
+        icon: Icon(Icons.add),
+        backgroundColor: colorScheme1.tertiary,
+        foregroundColor: colorScheme1.onTertiary,
         onPressed: () {
           Navigator.push(
             context,
@@ -74,29 +89,63 @@ class _DashBoardState extends State<DashBoard> {
                 builder: (context) => const AppointmentFormPage()),
           );
         },
-        child: const Icon(Icons.add),
       );
     } else {
       return null;
     }
   }
 
- Widget _getDashboardScreen() {
-      return Center(
+  Widget _getDashboardScreen() {
+    return SafeArea(
+      child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Card(
               elevation: 5,
               margin: EdgeInsets.all(16),
+              color: colorScheme1.primary,
               child: Container(
-                height: 150,
+                padding: EdgeInsets.all(20),
+                child: Center(
+                    child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/logo/Farmacia 3.svg',
+                      color: colorScheme1.onPrimary,
+                      width: 80,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    const Text(
+                      'Farmacia\nHinosa',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Montserrat',
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.left,
+                    ),
+                  ],
+                )),
+              ),
+            ),
+            Card(
+              elevation: 5,
+              margin: EdgeInsets.symmetric(horizontal:16, vertical: 1),
+              color: colorScheme1.primary,
+              child: Container(
                 padding: EdgeInsets.all(16),
                 child: Center(
                   child: Text(
-                    'Welcome Angel Jude Diones',
+                    'Welcome, \n Angel Jude Diones',
                     textAlign: TextAlign.center,
                     style: TextStyle(
+                      color: colorScheme1.onPrimary,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -104,55 +153,124 @@ class _DashBoardState extends State<DashBoard> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+             Padding(
+              padding: EdgeInsets.fromLTRB(20, 16, 16, 5),
+              child: Text(
+                'Upcoming Appointments',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            
             Card(
               elevation: 5,
-              margin: EdgeInsets.all(16),
+             margin: EdgeInsets.symmetric(horizontal: 16, vertical: 1),
               child: Column(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                    child: Text(
-                      'Appointment History',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  Divider(),
+                  
                   ListView.builder(
                     shrinkWrap: true,
-                    itemCount: appointmentHistories.length,
+                    itemCount: appointmentHistories.length == 0 ? 1: appointmentHistories.length,
                     itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(appointmentHistories[index]),
-                        trailing: ElevatedButton(
-                          onPressed: () {
-                            // Handle the view button press
-                            // You can navigate to another screen or show details
-                            // related to the selected appointment.
-                          },
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.blue, // Change button color
-                          ),
-                          child: Text(
-                            'View',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.white, // Change text color
+                      if (appointmentHistories.length != 0) {
+                        return ListTile(
+                          title: Text(appointmentHistories[index].title),
+                          subtitle:
+                              Text(appointmentHistories[index].date.toString()),
+                          trailing: ElevatedButton(
+                            onPressed: () {
+                              // Handle the view button press
+                              // You can navigate to another screen or show details
+                              // related to the selected appointment.
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: colorScheme1
+                                  .primary, // Change background color
+                              onPrimary:
+                                  colorScheme1.onPrimary, // Change text color
+                            ),
+                            child: Text(
+                              'View',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.white, // Change text color
+                              ),
                             ),
                           ),
-                        ),
-                      );
+                        );
+                      } else {
+                        return ListTile(
+                          title: Text('No Upcoming Appointments'),
+                        );
+                      }
                     },
                   ),
                 ],
               ),
             ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(20, 16, 16, 5),
+              child: Text(
+                'Appointment History',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Card(
+              elevation: 5,
+              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 1),
+              child: Column(
+                children: [
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: appointmentHistories.length == 0 ? 1: appointmentHistories.length,
+                    itemBuilder: (context, index) {
+                      if (appointmentHistories.length != 0) {
+                        return ListTile(
+                          title: Text(appointmentHistories[index].title),
+                          subtitle:
+                              Text(appointmentHistories[index].date.toString()),
+                          trailing: ElevatedButton(
+                            onPressed: () {
+                              // Handle the view button press
+                              // You can navigate to another screen or show details
+                              // related to the selected appointment.
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: colorScheme1
+                                  .primary, // Change background color
+                              onPrimary:
+                                  colorScheme1.onPrimary, // Change text color
+                            ),
+                            child: Text(
+                              'View',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.white, // Change text color
+                              ),
+                            ),
+                          ),
+                        );
+                      } else {
+                        return ListTile(
+                          title: Text('No Recent Appointments'),
+                        );
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ),
+                  SizedBox(height: 20),
           ],
         ),
-      );
+      ),
+    );
   }
 }
