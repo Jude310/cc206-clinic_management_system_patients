@@ -1,6 +1,7 @@
 import 'package:cc206_clinic_management_website_patients/theme/color_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'profile.dart';
 import 'settings.dart';
 import 'appointment_form.dart';
@@ -11,22 +12,29 @@ class DashBoard extends StatefulWidget {
 }
 
 class AppointmentHistory {
-  final String title;
+  bool approved;
   final DateTime date;
-  AppointmentHistory(this.title, this.date);
+  String reason;
+  AppointmentHistory(
+      {this.approved = false, required this.date, this.reason = ' '});
 }
 
 final List<AppointmentHistory> appointmentHistories = [
-  AppointmentHistory('test', DateTime( 2021, 10, 1)),
-  AppointmentHistory('test', DateTime( 2021, 10, 1)),
-  AppointmentHistory('test', DateTime( 2021, 10, 1)),
-  AppointmentHistory('test', DateTime( 2021, 10, 1)),
-  
+  AppointmentHistory(
+      approved: false, date: DateTime(2021, 10, 1), reason: 'Checkup'),
+  AppointmentHistory(
+      approved: false, date: DateTime(2021, 10, 2), reason: 'Fever'),
+  AppointmentHistory(
+      approved: false, date: DateTime(2021, 10, 3), reason: 'Severe cough'),
+  AppointmentHistory(
+      approved: false, date: DateTime(2021, 10, 4), reason: 'Headache'),
+
   // Add more appointments as needed
 ];
 
 class _DashBoardState extends State<DashBoard> {
   int _currentIndex = 1;
+  final DateFormat _dateFormat = DateFormat('MMMM d, yyyy');
 
   @override
   Widget build(BuildContext context) {
@@ -64,8 +72,8 @@ class _DashBoardState extends State<DashBoard> {
           label: 'Profile',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home Page',
+          icon: Icon(Icons.calendar_month),
+          label: 'Appointments',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.settings),
@@ -136,7 +144,7 @@ class _DashBoardState extends State<DashBoard> {
             ),
             Card(
               elevation: 5,
-              margin: EdgeInsets.symmetric(horizontal:16, vertical: 1),
+              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 1),
               color: colorScheme1.primary,
               child: Container(
                 padding: EdgeInsets.all(16),
@@ -153,7 +161,7 @@ class _DashBoardState extends State<DashBoard> {
                 ),
               ),
             ),
-             Padding(
+            Padding(
               padding: EdgeInsets.fromLTRB(20, 16, 16, 5),
               child: Text(
                 'Upcoming Appointments',
@@ -164,24 +172,108 @@ class _DashBoardState extends State<DashBoard> {
                 ),
               ),
             ),
-            
             Card(
               elevation: 5,
-             margin: EdgeInsets.symmetric(horizontal: 16, vertical: 1),
+              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 1),
               child: Column(
                 children: [
-                  
                   ListView.builder(
                     shrinkWrap: true,
-                    itemCount: appointmentHistories.length == 0 ? 1: appointmentHistories.length,
+                    itemCount: appointmentHistories.length == 0
+                        ? 1
+                        : appointmentHistories.length,
                     itemBuilder: (context, index) {
                       if (appointmentHistories.length != 0) {
                         return ListTile(
-                          title: Text(appointmentHistories[index].title),
-                          subtitle:
-                              Text(appointmentHistories[index].date.toString()),
+                          title: Text(
+                              _dateFormat
+                                  .format(appointmentHistories[index].date),
+                              style: TextStyle(
+                                  fontSize: 16.0, fontWeight: FontWeight.bold)),
+                          subtitle: Row(
+                            children: [
+                              CircleAvatar(
+                                radius: 5,
+                                backgroundColor:
+                                    appointmentHistories[index].approved == true
+                                        ? Colors.green
+                                        : Colors.grey,
+                              ),
+                              SizedBox(width: 5),
+                              Text(
+                                appointmentHistories[index].approved == true
+                                    ? 'Approved'
+                                    : 'Pending',
+                              ),
+                            ],
+                          ),
                           trailing: ElevatedButton(
                             onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => Dialog(
+                                    child: SizedBox(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 400,
+                                  child: SingleChildScrollView(
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          25, 20, 20, 25),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                'Appointment\nInformation',
+                                                style: TextStyle(
+                                                    fontSize: 22.0,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              CloseButton()
+                                            ],
+                                          ),
+                                          SizedBox(height: 20),
+                                          Text(
+                                            'Date',
+                                            style: TextStyle(
+                                              fontSize: 15.0,
+                                            ),
+                                          ),
+                                          Text(
+                                            _dateFormat.format(
+                                                appointmentHistories[index]
+                                                    .date),
+                                            style: TextStyle(
+                                                fontSize: 22.0,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          SizedBox(height: 20),
+                                          Text(
+                                            'Reason of Appointment',
+                                            style: TextStyle(
+                                              fontSize: 15.0,
+                                            ),
+                                          ),
+                                          Text(
+                                            appointmentHistories[index].reason,
+                                            style: TextStyle(
+                                                fontSize: 20.0,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                )),
+                              );
+
                               // Handle the view button press
                               // You can navigate to another screen or show details
                               // related to the selected appointment.
@@ -229,15 +321,101 @@ class _DashBoardState extends State<DashBoard> {
                 children: [
                   ListView.builder(
                     shrinkWrap: true,
-                    itemCount: appointmentHistories.length == 0 ? 1: appointmentHistories.length,
+                    itemCount: appointmentHistories.length == 0
+                        ? 1
+                        : appointmentHistories.length,
                     itemBuilder: (context, index) {
                       if (appointmentHistories.length != 0) {
                         return ListTile(
-                          title: Text(appointmentHistories[index].title),
-                          subtitle:
-                              Text(appointmentHistories[index].date.toString()),
+                          title: Text(
+                              _dateFormat
+                                  .format(appointmentHistories[index].date),
+                              style: TextStyle(
+                                  fontSize: 16.0, fontWeight: FontWeight.bold)),
+                          subtitle: Row(
+                            children: [
+                              CircleAvatar(
+                                radius: 5,
+                                backgroundColor:
+                                    appointmentHistories[index].approved == true
+                                        ? Colors.green
+                                        : Colors.grey,
+                              ),
+                              SizedBox(width: 5),
+                              Text(
+                                appointmentHistories[index].approved == true
+                                    ? 'Completed'
+                                    : 'Cancelled',
+                              ),
+                            ],
+                          ),
                           trailing: ElevatedButton(
                             onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => Dialog(
+                                    child: SizedBox(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 400,
+                                  child: SingleChildScrollView(
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          25, 20, 20, 25),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                'Appointment\nInformation',
+                                                style: TextStyle(
+                                                    fontSize: 22.0,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              CloseButton()
+                                            ],
+                                          ),
+                                          SizedBox(height: 20),
+                                          Text(
+                                            'Date',
+                                            style: TextStyle(
+                                              fontSize: 15.0,
+                                            ),
+                                          ),
+                                          Text(
+                                            _dateFormat.format(
+                                                appointmentHistories[index]
+                                                    .date),
+                                            style: TextStyle(
+                                                fontSize: 22.0,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          SizedBox(height: 20),
+                                          Text(
+                                            'Reason of Appointment',
+                                            style: TextStyle(
+                                              fontSize: 15.0,
+                                            ),
+                                          ),
+                                          Text(
+                                            appointmentHistories[index].reason,
+                                            style: TextStyle(
+                                                fontSize: 20.0,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                )),
+                              );
+
                               // Handle the view button press
                               // You can navigate to another screen or show details
                               // related to the selected appointment.
@@ -267,7 +445,7 @@ class _DashBoardState extends State<DashBoard> {
                 ],
               ),
             ),
-                  SizedBox(height: 20),
+            SizedBox(height: 80),
           ],
         ),
       ),
