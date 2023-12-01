@@ -50,7 +50,7 @@ class MyProfile extends StatelessWidget {
               const SizedBox(height: 20),
               ProfileSection(
                 title: 'Email',
-                data: 'isaiahlouis.yee@wvsu.edu.ph',
+                data: 'isaiahyee@gmail.com',
                 icon: Icons.email,
               ),
               ProfileSection(

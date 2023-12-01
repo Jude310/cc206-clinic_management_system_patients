@@ -1,4 +1,4 @@
-import 'package:cc206_clinic_management_website_patients/components/dashboard.dart';
+import 'package:cc206_clinic_management_website_patients/pages/dashboard.dart';
 import 'package:cc206_clinic_management_website_patients/features/sign_up/sign_up.dart';
 import 'package:cc206_clinic_management_website_patients/theme/color_theme.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +75,7 @@ class LogInPage extends StatelessWidget {
                             child: Icon(Icons.account_circle,
                                 color: colorScheme1.primary),
                           ),
-                          labelText: 'Username',
+                          labelText: 'Email',
                         ),
                       ),
                       const SizedBox(height: 10.0),
@@ -101,9 +101,8 @@ class LogInPage extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 95.0),
                         child: ElevatedButton(
                           onPressed: () {
-                            Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context)=> DashBoard()));
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => DashBoard()));
                           },
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
@@ -120,14 +119,10 @@ class LogInPage extends StatelessWidget {
                       const SizedBox(height: 10.0),
                       //make a hyperlink text
 
-                      GestureDetector(
-                        onTap: () => {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    SignUp()), // Replace with your SignUp widget
-                          )
+                      TextButton(
+                        onPressed: () => {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => SignUp()))
                         },
                         child: const Text(
                           'No account? Cick here to Sign up',

@@ -97,8 +97,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
                             TextButton(
                               onPressed: () => _selectDate(context),
                               style: TextButton.styleFrom(
-                                backgroundColor:
-                                    colorScheme1.tertiary,
+                                backgroundColor: colorScheme1.tertiary,
                                 primary: colorScheme1.onSecondary,
                                 padding: const EdgeInsets.all(5.0),
                               ),
@@ -134,10 +133,12 @@ class _AppointmentFormState extends State<AppointmentForm> {
               alignment: Alignment.centerRight,
               child: ElevatedButton(
                 onPressed: () {
+                  Navigator.pop(context);
                   // Implement appointment submission logic here
                   // You can use _reasonController.text and _selectedDate to get the form data
                 },
-                child: const Text('Submit', style: TextStyle(fontWeight: FontWeight.bold)),
+                child: const Text('Submit',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
                 style: ElevatedButton.styleFrom(
                   primary: colorScheme1.primary,
                   foregroundColor: colorScheme1.onPrimary,

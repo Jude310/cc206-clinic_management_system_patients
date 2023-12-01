@@ -76,7 +76,7 @@ class SettingsScreen extends StatelessWidget {
                   ListTile(
                     onTap: () => _showDeleteAccountConfirmation(context),
                     leading: Icon(Icons.delete),
-                    title: Text('Request Account Deletion'),
+                    title: Text('Request Account\nHistory Deletion'),
                   ),
                 ],
               ),
