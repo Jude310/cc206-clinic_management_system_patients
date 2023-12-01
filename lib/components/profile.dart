@@ -1,20 +1,33 @@
 import 'package:flutter/material.dart';
 
+enum Sex { male, female }
+class ProfileInfo {
+  String? name;
+  String? email;
+  DateTime? birthdate;
+  Sex? sex;
+  int? totalAppointments;
+  DateTime? accountCreationDate;
+  ProfileInfo({this.name, this.email, this.birthdate, this.sex, this.totalAppointments, this.accountCreationDate});
+}
+
+
 class MyProfile extends StatelessWidget {
   final String username = 'cuteCoder';
   final String birthdate = 'January 1, 2000';
   final String sex = 'Male';
   final int totalAppointments = 10; // Replace with actual total appointments
-  final DateTime accountCreationDate = DateTime(2022, 1, 1); // Replace with actual date
+  final DateTime accountCreationDate =
+      DateTime(2022, 1, 1); // Replace with actual date
 
- MyProfile({Key? key}) : super(key: key);
+  MyProfile({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal:16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -22,12 +35,14 @@ class MyProfile extends StatelessWidget {
               Center(
                 child: CircleAvatar(
                   radius: 60.0,
-                  backgroundImage: NetworkImage('https://picsum.photos/seed/377/600'),
+                  backgroundImage:
+                      NetworkImage('https://picsum.photos/seed/377/600'),
                 ),
               ),
               Center(
                 child: Text(
                   'Isaiah Louis Emmanuel S. Yee',
+                  textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 24),
                 ),
               ),
@@ -47,8 +62,10 @@ class MyProfile extends StatelessWidget {
                 data: 'isaiahlouis.yee@wvsu.edu.ph',
                 icon: Icons.email,
               ),
-              ProfileSection(title: 'Birthdate', data: birthdate, icon: Icons.cake),
-              ProfileSection(title: 'Sex', data: sex, icon: Icons.person_outline),
+              ProfileSection(
+                  title: 'Birthdate', data: birthdate, icon: Icons.cake),
+              ProfileSection(
+                  title: 'Sex', data: sex, icon: Icons.person_outline),
               ProfileSection(
                 title: 'Total Appointments',
                 data: totalAppointments.toString(),
@@ -60,7 +77,6 @@ class MyProfile extends StatelessWidget {
                 icon: Icons.calendar_today,
               ),
               const SizedBox(height: 20),
-              
             ],
           ),
         ),
