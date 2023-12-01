@@ -98,7 +98,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
                               onPressed: () => _selectDate(context),
                               style: TextButton.styleFrom(
                                 backgroundColor:
-                                    colorScheme1.onPrimary.withOpacity(0.8),
+                                    colorScheme1.tertiary,
                                 primary: colorScheme1.onSecondary,
                                 padding: const EdgeInsets.all(5.0),
                               ),
