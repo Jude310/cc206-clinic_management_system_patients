@@ -1,6 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
-
 import 'package:cc206_clinic_management_website_patients/theme/color_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -47,8 +44,8 @@ class _SignUpFormInputWidgetState extends State<SignUpFormInputWidget> {
   @override
   void dispose() {
     // Clean up the focus node when the Form is disposed.
-    _focusNode.dispose();
     super.dispose();
+    _focusNode.dispose();
   }
 
   @override
@@ -69,9 +66,10 @@ class _SignUpFormInputWidgetState extends State<SignUpFormInputWidget> {
         ),
         Material(
           color: Colors.transparent,
-          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+          borderRadius: const BorderRadius.all(Radius.circular(20.0)),
           elevation: 10.0,
           child: TextFormField(
+
             readOnly: widget.readOnly,
             onTap: widget.onTap,
             focusNode: _focusNode,
@@ -83,13 +81,17 @@ class _SignUpFormInputWidgetState extends State<SignUpFormInputWidget> {
               filled: true,
               fillColor: Colors.white.withOpacity(0.95),
               contentPadding:
-                  EdgeInsets.symmetric(vertical: 15.0, horizontal: 20),
-              border: OutlineInputBorder(
+                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
+              border: const OutlineInputBorder(
+                borderSide: BorderSide.none,
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
               ),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(width: 2, color: colorScheme1.primary),
+                  borderRadius: BorderRadius.all(Radius.circular(20.0))),
               prefixIcon: widget.prefixIcon != null
                   ? Padding(
-                      padding: EdgeInsets.only(left: 16.0, right: 10.0),
+                      padding: const EdgeInsets.only(left: 16.0, right: 10.0),
                       child:
                           Icon(widget.prefixIcon, color: colorScheme1.primary),
                     )
@@ -102,4 +104,3 @@ class _SignUpFormInputWidgetState extends State<SignUpFormInputWidget> {
     );
   }
 }
-
