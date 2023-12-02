@@ -182,14 +182,14 @@ class _SignUpFormState extends State<SignUpForm> {
               ),
             ),
             const SizedBox(height: 5.0),
-            SizedBox(
-              width: constraints.maxWidth,
-              child: SignUpFormInputWidget(
-                label: 'Address',
-                controller: _addressController,
-              ),
-            ),
-            const SizedBox(height: 16.0),
+            // SizedBox(
+            //   width: constraints.maxWidth,
+            //   child: SignUpFormInputWidget(
+            //     label: 'Address',
+            //     controller: _addressController,
+            //   ),
+            // ),
+            // const SizedBox(height: 16.0),
             Text('Account Information',
                 textAlign: TextAlign.left,
                 style: TextStyle(
@@ -244,7 +244,10 @@ class _SignUpFormState extends State<SignUpForm> {
                   backgroundColor: Color(0xFF43C6AC),
                   foregroundColor: Colors.black,
                 ),
-                child: const Text("Create Account", style: TextStyle(fontWeight: FontWeight.bold ),),
+                child: const Text(
+                  "Create Account",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
             ),
             const SizedBox(height: 16.0),
