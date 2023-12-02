@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:cc206_clinic_management_website_patients/features/log_in/log_in_page.dart';
 import 'package:cc206_clinic_management_website_patients/theme/color_theme.dart';
 import 'package:flutter/material.dart';
@@ -18,29 +16,31 @@ class SignUp extends StatelessWidget {
               fit: BoxFit.cover,
             )),
         Scaffold(
+          appBar: AppBar(
+            shadowColor: Colors.transparent,
+            backgroundColor: Colors.transparent,
+            title: Text(
+              'Sign Up',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            ),
+          ),
           backgroundColor: Colors.transparent,
-          body: Padding(
-            padding: EdgeInsets.all(36.0),
-            child: Center(
-                child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  SvgPicture.asset(
-                    'logo/logo_1.svg',
-                    width: 150,
-                  ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Let\'s get you set up!',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                    ),
-                  ),
-                  SignUpForm()
-                ],
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(36.0, 0, 36.0, 36.0),
+              child: Center(
+                child: Column(
+                  children: [
+                    // SvgPicture.asset(
+                    //   'logo/logo_1.svg',
+                    //   width: 150,
+                    // ),
+
+                    const SignUpForm()
+                  ],
+                ),
               ),
-            )),
+            ),
           ),
         ),
       ],
@@ -65,6 +65,13 @@ class _SignUpFormState extends State<SignUpForm> {
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _suffixController = TextEditingController();
   final TextEditingController _birthdateController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   String _sexController = 'Male';
 
   Future<void> _selectDate() async {
@@ -87,9 +94,17 @@ class _SignUpFormState extends State<SignUpForm> {
       return Form(
         key: _formKey,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
+            Text('Personal Information',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Colors.black)),
+            Divider(),
             Row(
               children: [
                 SizedBox(
@@ -99,7 +114,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     controller: _firstNameController,
                   ),
                 ),
-                SizedBox(width: 9.0),
+                const SizedBox(width: 9.0),
                 Flexible(
                   child: SignUpFormInputWidget(
                     label: 'Middle Name',
@@ -108,7 +123,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 ),
               ],
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             Row(
               children: [
                 SizedBox(
@@ -118,7 +133,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     controller: _lastNameController,
                   ),
                 ),
-                SizedBox(width: 6.0),
+                const SizedBox(width: 6.0),
                 Flexible(
                   child: SignUpFormInputWidget(
                     label: 'Suffix',
@@ -127,7 +142,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 ),
               ],
             ),
-            SizedBox(height: 10.0),
+            const SizedBox(height: 10.0),
             Row(
               children: [
                 SizedBox(
@@ -142,7 +157,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     },
                   ),
                 ),
-                SizedBox(width: 6.0),
+                const SizedBox(width: 6.0),
                 Flexible(
                   child: SignUpDropDownFormField(
                     label: 'Sex',
@@ -151,49 +166,89 @@ class _SignUpFormState extends State<SignUpForm> {
                 ),
               ],
             ),
-            SizedBox(height: 16.0),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
+            Text('Contact Information',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Colors.black)),
+            Divider(),
+            SizedBox(
+              width: constraints.maxWidth,
+              child: SignUpFormInputWidget(
+                label: 'Phone Number',
+                controller: _phoneController,
+              ),
+            ),
+            const SizedBox(height: 5.0),
+            SizedBox(
+              width: constraints.maxWidth,
+              child: SignUpFormInputWidget(
+                label: 'Address',
+                controller: _addressController,
+              ),
+            ),
+            const SizedBox(height: 16.0),
+            Text('Account Information',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Colors.black)),
+            Divider(),
+            SizedBox(
+              width: constraints.maxWidth,
+              child: SignUpFormInputWidget(
+                label: 'Email',
+                controller: _emailController,
+              ),
+            ),
+            const SizedBox(height: 5.0),
+            SizedBox(
+              width: constraints.maxWidth,
+              child: SignUpFormInputWidget(
+                label: 'Username',
+                controller: _usernameController,
+              ),
+            ),
+            const SizedBox(height: 5.0),
+            SizedBox(
+              width: constraints.maxWidth,
+              child: SignUpFormInputWidget(
+                label: 'Password',
+                controller: _passwordController,
+              ),
+            ),
+            const SizedBox(height: 5.0),
+            SizedBox(
+              width: constraints.maxWidth,
+              child: SignUpFormInputWidget(
+                label: 'Confirm Password',
+                controller: _confirmPasswordController,
+              ),
+            ),
+            const SizedBox(height: 16.0),
             Align(
-              alignment: Alignment.centerLeft,
-            ),
-            SizedBox(height: 16.0),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LogInPage(),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF43C6AC),
-                    foregroundColor: Colors.black,
-                  ),
-                  child: Text("Create Account"),
+              alignment: Alignment.centerRight,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LogInPage(),
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF43C6AC),
+                  foregroundColor: Colors.black,
                 ),
-                SizedBox(height: 16.0),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LogInPage(),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF43C6AC),
-                    foregroundColor: Colors.black,
-                  ),
-                  child: Text("Already have an account?"),
-                ),
-              ],
+                child: const Text("Create Account", style: TextStyle(fontWeight: FontWeight.bold ),),
+              ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
           ],
         ),
       );
@@ -254,8 +309,8 @@ class _SignUpDropDownFormFieldState extends State<SignUpDropDownFormField> {
             filled: true,
             fillColor: Colors.white.withOpacity(0.95),
             contentPadding:
-                EdgeInsets.symmetric(vertical: 15.0, horizontal: 20),
-            border: OutlineInputBorder(
+                const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20),
+            border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(20.0)),
             ),
           ),

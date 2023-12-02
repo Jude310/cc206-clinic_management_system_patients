@@ -21,13 +21,25 @@ class AppointmentHistory {
 
 final List<AppointmentHistory> appointmentHistories = [
   AppointmentHistory(
-      approved: false, date: DateTime(2021, 10, 1), reason: 'Checkup'),
+      approved: false, date: DateTime(2023, 10, 1), reason: 'Checkup'),
   AppointmentHistory(
-      approved: false, date: DateTime(2021, 10, 2), reason: 'Fever'),
+      approved: true, date: DateTime(2023, 08, 5), reason: 'Fever'),
   AppointmentHistory(
-      approved: false, date: DateTime(2021, 10, 3), reason: 'Severe cough'),
+      approved: false, date: DateTime(2023, 04, 25), reason: 'Severe cough'),
   AppointmentHistory(
-      approved: false, date: DateTime(2021, 10, 4), reason: 'Headache'),
+      approved: true, date: DateTime(2022, 11, 4), reason: 'Headache'),
+
+  // Add more appointments as needed
+];
+final List<AppointmentHistory> upcomingAppointments = [
+  AppointmentHistory(
+      approved: false, date: DateTime(2023, 12, 03), reason: 'Checkup'),
+  AppointmentHistory(
+      approved: true, date: DateTime(2023, 12, 04), reason: 'Fever'),
+  AppointmentHistory(
+      approved: false, date: DateTime(2023, 12, 05), reason: 'Severe cough'),
+  AppointmentHistory(
+      approved: false, date: DateTime(2024, 01, 4), reason: 'Headache'),
 
   // Add more appointments as needed
 ];
@@ -150,7 +162,7 @@ class _DashBoardState extends State<DashBoard> {
                 padding: EdgeInsets.all(16),
                 child: Center(
                   child: Text(
-                    'Welcome, \n Angel Jude Diones',
+                    'Welcome, \n Isaiah Louis Emmanuel Yee',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: colorScheme1.onPrimary,
@@ -179,15 +191,15 @@ class _DashBoardState extends State<DashBoard> {
                 children: [
                   ListView.builder(
                     shrinkWrap: true,
-                    itemCount: appointmentHistories.length == 0
+                    itemCount: upcomingAppointments.length == 0
                         ? 1
                         : appointmentHistories.length,
                     itemBuilder: (context, index) {
-                      if (appointmentHistories.length != 0) {
+                      if (upcomingAppointments.length != 0) {
                         return ListTile(
                           title: Text(
                               _dateFormat
-                                  .format(appointmentHistories[index].date),
+                                  .format(upcomingAppointments[index].date),
                               style: TextStyle(
                                   fontSize: 16.0, fontWeight: FontWeight.bold)),
                           subtitle: Row(
@@ -195,13 +207,13 @@ class _DashBoardState extends State<DashBoard> {
                               CircleAvatar(
                                 radius: 5,
                                 backgroundColor:
-                                    appointmentHistories[index].approved == true
+                                    upcomingAppointments[index].approved == true
                                         ? Colors.green
                                         : Colors.grey,
                               ),
                               SizedBox(width: 5),
                               Text(
-                                appointmentHistories[index].approved == true
+                                upcomingAppointments[index].approved == true
                                     ? 'Approved'
                                     : 'Pending',
                               ),
@@ -248,7 +260,7 @@ class _DashBoardState extends State<DashBoard> {
                                           ),
                                           Text(
                                             _dateFormat.format(
-                                                appointmentHistories[index]
+                                                upcomingAppointments[index]
                                                     .date),
                                             style: TextStyle(
                                                 fontSize: 22.0,
@@ -262,7 +274,7 @@ class _DashBoardState extends State<DashBoard> {
                                             ),
                                           ),
                                           Text(
-                                            appointmentHistories[index].reason,
+                                            upcomingAppointments[index].reason,
                                             style: TextStyle(
                                                 fontSize: 20.0,
                                                 fontWeight: FontWeight.w500),
@@ -339,7 +351,7 @@ class _DashBoardState extends State<DashBoard> {
                                 backgroundColor:
                                     appointmentHistories[index].approved == true
                                         ? Colors.green
-                                        : Colors.grey,
+                                        : Color.fromARGB(255, 222, 167, 2),
                               ),
                               SizedBox(width: 5),
                               Text(
