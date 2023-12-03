@@ -1,17 +1,21 @@
+import 'package:cc206_clinic_management_website_patients/utils/session/current_user.dart';
 import 'package:flutter/material.dart';
 
+class MyProfile extends StatefulWidget {
+  const MyProfile({super.key});
 
+  @override
+  State<MyProfile> createState() => _MyProfileState();
+}
 
+class _MyProfileState extends State<MyProfile> {
 
-class MyProfile extends StatelessWidget {
-  final String username = 'cuteCoder';
-  final String birthdate = 'January 1, 2000';
-  final String sex = 'Male';
-  final int totalAppointments = 10; // Replace with actual total appointments
-  final DateTime accountCreationDate =
-      DateTime(2022, 1, 1); // Replace with actual date
-
-  MyProfile({Key? key}) : super(key: key);
+  final String username = '${CurrentUser.currentUser?.username}';
+  final DateTime? birthdate = CurrentUser.patient?.patientBirthDate;
+  final String sex = '${CurrentUser.patient?.patientSex}';
+  final int? totalAppointments = CurrentUser.patient?.appointmentsList.length; // Replace with actual total appointments
+  final DateTime? accountCreationDate =
+      CurrentUser.currentUser?.accountCreationDate; // Replace with actual date
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +36,7 @@ class MyProfile extends StatelessWidget {
               ),
               Center(
                 child: Text(
-                  'Isaiah Louis Emmanuel S. Yee',
+                  '${CurrentUser.currentUser?.fullName}',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 24),
                 ),
@@ -54,7 +58,7 @@ class MyProfile extends StatelessWidget {
                 icon: Icons.email,
               ),
               ProfileSection(
-                  title: 'Birthdate', data: birthdate, icon: Icons.cake),
+                  title: 'Birthdate', data: _formatDate(birthdate), icon: Icons.cake),
               ProfileSection(
                   title: 'Sex', data: sex, icon: Icons.person_outline),
               ProfileSection(
@@ -75,7 +79,8 @@ class MyProfile extends StatelessWidget {
     );
   }
 
-  String _formatDate(DateTime date) {
+  String _formatDate(DateTime? date) {
+    if (date == null) return 'N/A';
     return '${date.day}/${date.month}/${date.year}';
   }
 }
