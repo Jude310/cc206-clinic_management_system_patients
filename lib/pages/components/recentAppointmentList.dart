@@ -51,7 +51,10 @@ class _RecentAppointmentsWidgetState extends State<RecentAppointmentsWidget> {
                   future: CurrentUser.patient?.getPastAppointments,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting)
-                      return const Center(child: CircularProgressIndicator());
+                      return ListTile(
+                          contentPadding: EdgeInsets.symmetric(vertical: 8),
+                          title:
+                              const Center(child: CircularProgressIndicator()));
                     else if (snapshot.hasError)
                       return Center(child: Text('Error: ${snapshot.error}'));
                     else if (snapshot.hasData) {
@@ -181,7 +184,9 @@ class _RecentAppointmentsWidgetState extends State<RecentAppointmentsWidget> {
                             );
                           } else {
                             return ListTile(
-                              title: Text('No Recent Appointments'),
+                              contentPadding: EdgeInsets.symmetric(vertical: 8),
+                              title:
+                                  Center(child: Text('No Recent Appointments')),
                             );
                           }
                         },

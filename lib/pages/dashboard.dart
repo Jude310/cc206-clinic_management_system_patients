@@ -17,9 +17,9 @@ class DashBoard extends StatefulWidget {
 
 class _DashBoardState extends State<DashBoard> {
   int _currentIndex = 1;
-  
+  @override
   void initState() {
-    CurrentUser.patient?.refetchAppointments();
+    
     super.initState();
 
   }
@@ -137,7 +137,7 @@ class _DashBoardState extends State<DashBoard> {
                 padding: EdgeInsets.all(16),
                 child: Center(
                   child: Text(
-                    'Welcome, \n Isaiah Louis Emmanuel Yee',
+                    'Welcome, \n ${CurrentUser.currentUser?.fullName}!',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: colorScheme1.onPrimary,

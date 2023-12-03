@@ -1,3 +1,4 @@
+import 'dart:developer' as developer;
 class AccountUser {
   late final String id;
   final String firstName;
@@ -22,6 +23,7 @@ class AccountUser {
   });
 
   factory AccountUser.fromJson(Map<String, dynamic> json) {
+    developer.log(json.toString(), name: 'AccountUser.fromJson');
     return AccountUser(
       id: json['_id'],
       username: json['username'],
@@ -30,7 +32,7 @@ class AccountUser {
       middleName: json['middleName'],
       phoneNumber: json['phoneNumber'],
       email: json['email'],
-      accountCreationDate: DateTime.parse(json['accountCreationDate']),
+      accountCreationDate: DateTime.parse(json['accountCreatedOn']),
     );
   }
 

@@ -39,7 +39,10 @@ class _UpcomingAppointmentWidgetState extends State<UpcomingAppointmentWidget> {
                   future: CurrentUser.patient?.getUpcomingAppointments,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting)
-                      return const Center(child: CircularProgressIndicator());
+                      return ListTile(
+                          contentPadding: EdgeInsets.symmetric(vertical: 8),
+                          title:
+                              const Center(child: CircularProgressIndicator()));
                     else if (snapshot.hasError)
                       return Center(child: Text('Error: ${snapshot.error}'));
                     else if (snapshot.hasData) {
@@ -54,8 +57,8 @@ class _UpcomingAppointmentWidgetState extends State<UpcomingAppointmentWidget> {
                           if (upcomingAppointments.length != 0) {
                             return ListTile(
                               title: Text(
-                                  _dateFormat
-                                      .format(upcomingAppointments[index].appointmentDate),
+                                  _dateFormat.format(upcomingAppointments[index]
+                                      .appointmentDate),
                                   style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.bold)),
@@ -135,8 +138,7 @@ class _UpcomingAppointmentWidgetState extends State<UpcomingAppointmentWidget> {
                                                 ),
                                               ),
                                               Text(
-                                                '${upcomingAppointments[index]
-                                                    .appointmentReason}',
+                                                '${upcomingAppointments[index].appointmentReason}',
                                                 style: TextStyle(
                                                     fontSize: 20.0,
                                                     fontWeight:
@@ -170,6 +172,8 @@ class _UpcomingAppointmentWidgetState extends State<UpcomingAppointmentWidget> {
                             );
                           } else {
                             return ListTile(
+                              contentPadding:
+                                  EdgeInsets.symmetric(vertical: 8),
                               title: Text('No Upcoming Appointments'),
                             );
                           }

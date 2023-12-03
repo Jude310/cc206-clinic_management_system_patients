@@ -1,10 +1,11 @@
 import 'package:cc206_clinic_management_website_patients/pages/dashboard.dart';
 import 'package:cc206_clinic_management_website_patients/features/sign_up/sign_up.dart';
 import 'package:cc206_clinic_management_website_patients/theme/color_theme.dart';
-import 'package:cc206_clinic_management_website_patients/utils/session/sessions.dart';
+import 'package:cc206_clinic_management_website_patients/utils/session/current_user.dart';
+// import 'package:cc206_clinic_management_website_patients/utils/session/sessions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 
 class LogInPage extends StatefulWidget {
   const LogInPage({super.key});
@@ -41,45 +42,39 @@ class _LogInPageState extends State<LogInPage> {
   //   }
   // }
 
-  Future getTest() async {
-    try {
-      final response = await Session.get('/');
-      if (response.statusCode == 200) {
-        print(response.statusCode);
-        print(response.body);
-      } else {
-        print(response.statusCode);
-        print(response.body);
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
+  // Future getTest() async {
+  //   try {
+  //     final response = await Session.get('/');
+  //     if (response.statusCode == 200) {
+  //       print(response.statusCode);
+  //       print(response.body);
+  //     } else {
+  //       print(response.statusCode);
+  //       print(response.body);
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
   Future _logIn(context) async {
     setState(() {
       logInError = false;
     });
-    var userData = {
-      'username': _emailController.text,
-      'password': _passwordController.text
-    };
-
-    final response = await Session.post(
-      '/',
-      body: userData,
-    );
-
-    if (response.statusCode == 201) {
-//get patient ID then store to session
-      
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => DashBoard()));
-    } else {
-      setState(() {
+    CurrentUser.logIn(
+      username: _emailController.text,
+      password: _passwordController.text,
+      onSuccess: () => {
+        setState(() {
+          logInError = false;
+        }),
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => DashBoard()))
+      },
+      onFail: () => setState(() {
         logInError = true;
-      });
-    }
+      }),
+    );
   }
 
   @override

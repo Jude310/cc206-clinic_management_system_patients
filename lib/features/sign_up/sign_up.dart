@@ -2,7 +2,7 @@ import 'package:cc206_clinic_management_website_patients/features/log_in/log_in_
 import 'package:cc206_clinic_management_website_patients/theme/color_theme.dart';
 import 'package:flutter/material.dart';
 import '../components/sign_up_form_input_widget.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
 
 class SignUp extends StatelessWidget {
   @override
