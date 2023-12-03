@@ -1,16 +1,48 @@
-# cc206_clinic_management_website_patients
+# Clinic Mobile Application - Patient Portal
 
-A new Flutter project.
+## Overview
+This Flutter-based mobile application serves as a patient portal for Hinosa Clinic, providing users with convenient access to their health information and clinic-related services.
 
-## Getting Started
+# Team Members
+- Ike Angot
+- Ed Francis Kyle Gayapa Arendain
+- Kent Lorenz Daria
+- Angel Jude Diones
+- Isaiah Louis Emmanuel Yee
 
-This project is a starting point for a Flutter application.
+## Features
 
-A few resources to get you started if this is your first Flutter project:
+1. Log-in Page
+- User authentication via email and password.
+- Sign-up option for new users.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+2. Sign-up Page
+- Basic personal, contact, and account information.
+- Simple account creation process.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+3. Appointments Page
+- Display of upcoming and past appointments.
+- Booking appointments for future dates.
+
+4. Appointment Request
+- Online appointment scheduling.
+- Date and reason selection.
+
+5. History Deletion Request
+- User-initiated request for account history deletion.
+- Privacy protection and compliance.
+
+6. Update Profile
+- User-driven profile updates.
+- Modification of username and password.
+
+
+# Technical Stack
+- Framework: Flutter
+- Language: Dart
+- Database: MongoDB
+- Backend: NestJS
+- Version Control: GitHub
+
+# Getting Started
+For setting up and running the application, refer to the online documentation. The repository includes essential resources and guides for Flutter development.
