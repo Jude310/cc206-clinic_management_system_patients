@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:cc206_clinic_management_website_patients/features/log_in/log_in_page.dart';
 import 'package:cc206_clinic_management_website_patients/theme/color_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import '../components/sign_up_form_input_widget.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -19,15 +22,15 @@ class SignUp extends StatelessWidget {
           appBar: AppBar(
             shadowColor: Colors.transparent,
             backgroundColor: Colors.transparent,
-            title: Text(
+            title: const Text(
               'Sign Up',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
           ),
           backgroundColor: Colors.transparent,
-          body: SingleChildScrollView(
+          body: const SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(36.0, 0, 36.0, 36.0),
+              padding: EdgeInsets.fromLTRB(36.0, 0, 36.0, 36.0),
               child: Center(
                 child: Column(
                   children: [
@@ -36,7 +39,7 @@ class SignUp extends StatelessWidget {
                     //   width: 150,
                     // ),
 
-                    const SignUpForm()
+                    SignUpForm()
                   ],
                 ),
               ),
@@ -88,6 +91,91 @@ class _SignUpFormState extends State<SignUpForm> {
     }
   }
 
+  Future<void> _sendSignUpForm() async {
+    final Map<String, dynamic> signUpInformation = {
+      'username': _usernameController.text,
+      'password': _passwordController.text,
+      'employeeTitle': 'Patient',
+      'firstName': _firstNameController.text,
+      'middleName': _middleNameController.text,
+      'lastName': _lastNameController.text,
+      'phoneNumber': _phoneController.text,
+      'email': _emailController.text,
+      'sex': _sexController
+    };
+
+    final String signUpJson = jsonEncode(signUpInformation);
+
+    try {
+      final http.Response response =
+          await http.post(Uri.https('clinic-man.onrender.com', 'signup'),
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: signUpJson);
+      if (response.statusCode == 201) {
+        // ignore: use_build_context_synchronously
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text("Signup Successful"),
+                content: const Text(
+                    'Your account has been created successfully! Returning to Log In'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('OK'),
+                  ),
+                ],
+              );
+            });
+      } else {
+        // ignore: use_build_context_synchronously
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text("Signup Failed"),
+                content: Text(
+                    'Request failed. Code: ${response.statusCode}\nBody: ${response.body}\n Returning to Log In.'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('OK'),
+                  ),
+                ],
+              );
+            });
+      }
+    } catch (error) {
+      // ignore: use_build_context_synchronously
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text("Signup Failed"),
+              content: const Text('Failed to post signup. Returning to Log In'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
@@ -98,13 +186,13 @@ class _SignUpFormState extends State<SignUpForm> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             const SizedBox(height: 16.0),
-            Text('Personal Information',
+            const Text('Personal Information',
                 textAlign: TextAlign.left,
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                     color: Colors.black)),
-            Divider(),
+            const Divider(),
             Row(
               children: [
                 SizedBox(
@@ -167,13 +255,13 @@ class _SignUpFormState extends State<SignUpForm> {
               ],
             ),
             const SizedBox(height: 16.0),
-            Text('Contact Information',
+            const Text('Contact Information',
                 textAlign: TextAlign.left,
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                     color: Colors.black)),
-            Divider(),
+            const Divider(),
             SizedBox(
               width: constraints.maxWidth,
               child: SignUpFormInputWidget(
@@ -190,13 +278,13 @@ class _SignUpFormState extends State<SignUpForm> {
             //   ),
             // ),
             // const SizedBox(height: 16.0),
-            Text('Account Information',
+            const Text('Account Information',
                 textAlign: TextAlign.left,
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                     color: Colors.black)),
-            Divider(),
+            const Divider(),
             SizedBox(
               width: constraints.maxWidth,
               child: SignUpFormInputWidget(
@@ -232,16 +320,11 @@ class _SignUpFormState extends State<SignUpForm> {
             Align(
               alignment: Alignment.centerRight,
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LogInPage(),
-                    ),
-                  );
+                onPressed: () async {
+                  await _sendSignUpForm();
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF43C6AC),
+                  backgroundColor: const Color(0xFF43C6AC),
                   foregroundColor: Colors.black,
                 ),
                 child: const Text(
