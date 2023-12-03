@@ -1,10 +1,19 @@
 import 'package:cc206_clinic_management_website_patients/features/log_in/log_in_page.dart';
 import 'package:cc206_clinic_management_website_patients/theme/color_theme.dart';
+import 'package:cc206_clinic_management_website_patients/utils/session/current_user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
+
+  void _logOut(BuildContext context) {
+    CurrentUser.logOut();
+    // Implement logic to log out
+    // For now, just navigate back to the login page
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => LogInPage()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,24 +29,24 @@ class SettingsScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                SvgPicture.asset(
-                  'assets/logo/Farmacia 3.svg',
-                  color: colorScheme1.primary,
-                  width: 80,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                const Text(
-                  'Farmacia Hinosa',
-                  style: TextStyle(
-                    color: Color(0xFF191645),
-                    fontFamily: 'Montserrat',
-                    fontSize: 25.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.left,
-                ),
+                    SvgPicture.asset(
+                      'assets/logo/Farmacia 3.svg',
+                      color: colorScheme1.primary,
+                      width: 80,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    const Text(
+                      'Farmacia Hinosa',
+                      style: TextStyle(
+                        color: Color(0xFF191645),
+                        fontFamily: 'Montserrat',
+                        fontSize: 25.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.left,
+                    ),
                   ],
                 ),
               ),
@@ -80,7 +89,6 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              
             ],
           ),
         ),
@@ -193,12 +201,5 @@ class SettingsScreen extends StatelessWidget {
         );
       },
     );
-  }
-
-  void _logOut(BuildContext context) {
-    // Implement logic to log out
-    // For now, just navigate back to the login page
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => LogInPage()));
   }
 }
