@@ -112,7 +112,7 @@ class _LogInPageState extends State<LogInPage> {
                   children: [
                     SvgPicture.asset(
                       'assets/logo/Farmacia 3.svg',
-                      width: 150,
+                      width: 100,
                     ),
                     const Text(
                       'Farmacia Hinosa',
