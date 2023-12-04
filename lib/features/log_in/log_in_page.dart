@@ -69,9 +69,9 @@ class _LogInPageState extends State<LogInPage> {
           logInError = false;
         }),
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => DashBoard()))
+            .pushReplacement(MaterialPageRoute(builder: (context) => DashBoard()))
       },
-      onFail: () => setState(() {
+      onFail: (response) => setState(() {
         logInError = true;
       }),
     );

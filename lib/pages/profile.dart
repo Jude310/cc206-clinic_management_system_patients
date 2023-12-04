@@ -54,7 +54,7 @@ class _MyProfileState extends State<MyProfile> {
               const SizedBox(height: 20),
               ProfileSection(
                 title: 'Email',
-                data: 'isaiahyee@gmail.com',
+                data: '${CurrentUser.currentUser?.email}',
                 icon: Icons.email,
               ),
               ProfileSection(

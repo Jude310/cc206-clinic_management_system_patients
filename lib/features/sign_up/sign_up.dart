@@ -1,11 +1,13 @@
 import 'dart:convert';
-
+import 'dart:developer' as developer;
 import 'package:cc206_clinic_management_website_patients/features/log_in/log_in_page.dart';
+import 'package:cc206_clinic_management_website_patients/pages/dashboard.dart';
 import 'package:cc206_clinic_management_website_patients/theme/color_theme.dart';
+import 'package:cc206_clinic_management_website_patients/utils/session/current_user.dart';
+import 'package:cc206_clinic_management_website_patients/utils/session/sessions.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../components/sign_up_form_input_widget.dart';
-
 
 class SignUp extends StatelessWidget {
   @override
@@ -91,7 +93,10 @@ class _SignUpFormState extends State<SignUpForm> {
     }
   }
 
-  Future<void> _sendSignUpForm() async {
+  Future<void> _sendSignUpForm(
+      {void Function(dynamic)? onError,
+      void Function(dynamic)? onFail,
+      void Function()? onSuccess}) async {
     final Map<String, dynamic> signUpInformation = {
       'username': _usernameController.text,
       'password': _passwordController.text,
@@ -103,76 +108,35 @@ class _SignUpFormState extends State<SignUpForm> {
       'email': _emailController.text,
       'sex': _sexController
     };
+    final Map<String, dynamic> createPatient = {
+      'patientFName': _firstNameController.text,
+      'patientMName': _middleNameController.text,
+      'patientLName': _lastNameController.text,
+      'patientSuffix': _suffixController.text,
+      'patientBirthDate': _birthdateController.text,
+      'patientSex': _sexController,
+    };
 
-    final String signUpJson = jsonEncode(signUpInformation);
+    // final String signUpJson = jsonEncode(signUpInformation);
 
     try {
-      final http.Response response =
-          await http.post(Uri.https('clinic-man.onrender.com', 'signup'),
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: signUpJson);
+      developer.log(signUpInformation.toString(), name: 'signUpInformation');
+      final response = await Session.post('/signup', body: signUpInformation);
+
       if (response.statusCode == 201) {
-        // ignore: use_build_context_synchronously
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: const Text("Signup Successful"),
-                content: const Text(
-                    'Your account has been created successfully! Returning to Log In'),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text('OK'),
-                  ),
-                ],
-              );
-            });
+        CurrentUser.logIn(
+            username: _usernameController.text,
+            password: _passwordController.text,
+            onSuccess: onSuccess,
+            onSignUp: true,
+            onFail: onFail,
+            signUpData: createPatient);
+        ;
       } else {
-        // ignore: use_build_context_synchronously
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: const Text("Signup Failed"),
-                content: Text(
-                    'Request failed. Code: ${response.statusCode}\nBody: ${response.body}\n Returning to Log In.'),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text('OK'),
-                  ),
-                ],
-              );
-            });
+        onFail?.call(response);
       }
     } catch (error) {
-      // ignore: use_build_context_synchronously
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text("Signup Failed"),
-              content: const Text('Failed to post signup. Returning to Log In'),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('OK'),
-                ),
-              ],
-            );
-          });
+      onError?.call(error);
     }
   }
 
@@ -248,9 +212,10 @@ class _SignUpFormState extends State<SignUpForm> {
                 const SizedBox(width: 6.0),
                 Flexible(
                   child: SignUpDropDownFormField(
-                    label: 'Sex',
-                    onChanged: (value) => _sexController = value!,
-                  ),
+                      label: 'Sex',
+                      onChanged: (value) => setState(() {
+                            _sexController = value!;
+                          })),
                 ),
               ],
             ),
@@ -321,7 +286,71 @@ class _SignUpFormState extends State<SignUpForm> {
               alignment: Alignment.centerRight,
               child: ElevatedButton(
                 onPressed: () async {
-                  await _sendSignUpForm();
+                  await _sendSignUpForm(
+                    onSuccess: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text("Signup Successful"),
+                              content: const Text(
+                                  'Your account has been created successfully! Returning to Log In'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => DashBoard(),
+                                      ),
+                                    );
+                                  },
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            );
+                          });
+                    },
+                    onError: (error) {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text("Signup Failed"),
+                              content: Text(
+                                  'Failed to post signup $error. Returning to Log In'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            );
+                          });
+                    },
+                    onFail: (response) {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text("Signup Failed"),
+                              content: Text(
+                                  'Request failed. Code: ${response.statusCode}  \nBody: ${response.body} \n Returning to Log In.'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            );
+                          });
+                    },
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF43C6AC),

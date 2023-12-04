@@ -1,7 +1,10 @@
-import 'dart:convert';
+// import 'dart:convert';
+import 'package:cc206_clinic_management_website_patients/utils/session/current_user.dart';
+import 'package:cc206_clinic_management_website_patients/utils/session/sessions.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'dart:developer' as developer;
 
 class AppointmentFormPage extends StatelessWidget {
   const AppointmentFormPage({Key? key}) : super(key: key);
@@ -44,32 +47,31 @@ class _AppointmentFormState extends State<AppointmentForm> {
   }
 
   Future<void> _sendAppointmentRequest() async {
-    final Map<String, dynamic> appointmentData = {
+    final appointmentData = {
+      'to': 'dariakentlorenz@gmail.com',
       'subject': 'Appointment Request',
       'text':
-          'Name: John Cena\nAppointment Date: ${_dateFormat.format(_selectedDate)}\nReason: ${_reasonController.text}',
+          'Name: ${CurrentUser.currentUser?.fullName}\nAppointment Date: ${_dateFormat.format(_selectedDate)}\nReason: ${_reasonController.text}',
     };
 
-    final String jsonData = jsonEncode(appointmentData);
-
+    // var jsonData = jsonEncode(appointmentData);
+    // developer.log(appointmentData.toString(), name: 'jsonData');
     try {
-      final http.Response response = await http.post(
-        Uri.parse('http://localhost:3200/email/send-dynamic-email'),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: jsonData,
+      final response = await Session.post(
+        '/email/send-dynamic-email',
+        body: appointmentData,
       );
+      // developer.log('Response Body: ${response.body}');
 
       if (response.statusCode == 200) {
-        print('Appointment request sent successfully!');
+        developer.log('Appointment request sent successfully!', name: 'email');
       } else {
-        print(
+        developer.log(
             'Failed to send appointment request. Status Code: ${response.statusCode}');
-        print('Response Body: ${response.body}');
+        developer.log('Response Body: ${response.body}');
       }
     } catch (error) {
-      print('Error sending appointment request: $error');
+      developer.log('Error sending appointment request: $error');
     }
   }
 

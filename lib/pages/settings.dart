@@ -7,6 +7,12 @@ import 'package:flutter_svg/svg.dart';
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
 
+void changeUsername(String newUsername) async {
+    // await CurrentUser.changeUsername(newUsername);
+    // Implement logic to update username
+    // For now, just print the new username
+    // print(CurrentUser.currentUser?.username);
+  }
   void _logOut(BuildContext context) {
     CurrentUser.logOut();
     // Implement logic to log out
@@ -68,10 +74,7 @@ class SettingsScreen extends StatelessWidget {
                     leading: Icon(Icons.person),
                     title: Text('Update Username'),
                   ),
-                  ListTile(
-                    leading: Icon(Icons.invert_colors),
-                    title: Text('Negative Colors'),
-                  ),
+                  
                   ListTile(
                     onTap: () => _showUpdatePasswordForm(context),
                     leading: Icon(Icons.lock),
@@ -97,6 +100,7 @@ class SettingsScreen extends StatelessWidget {
   }
 
   void _showUpdateUsernameForm(BuildContext context) {
+    TextEditingController _userController = TextEditingController();
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -106,11 +110,13 @@ class SettingsScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               TextFormField(
+                controller: _userController,
                 decoration: InputDecoration(labelText: 'New Username'),
               ),
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
+                  changeUsername(_userController.text);
                   // Implement logic to update username
                   Navigator.pop(context);
                 },

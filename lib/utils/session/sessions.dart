@@ -6,6 +6,7 @@ class Session {
     headers = {};
   }
   
+  // static String url = '127.0.0.1:3000';
   static String url = '10.0.2.2:3000';
   // Private constructor to prevent external instantiation
   Session._privateConstructor();
@@ -22,7 +23,13 @@ class Session {
     _updateCookie(response);
     return response;
   }
+  static Future patch(String path, {Object? body}) async {
 
+    Uri httpUrl = Uri.http(url, path);
+    var response = await http.patch(httpUrl, body: body, headers: headers);
+    _updateCookie(response);
+    return response;
+  }
   static Future post(String path, {dynamic body}) async {
     Uri httpUrl = Uri.http(url, path);
     var response = await http.post(httpUrl, body: body, headers: headers);

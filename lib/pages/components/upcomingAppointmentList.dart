@@ -174,7 +174,7 @@ class _UpcomingAppointmentWidgetState extends State<UpcomingAppointmentWidget> {
                             return ListTile(
                               contentPadding:
                                   EdgeInsets.symmetric(vertical: 8),
-                              title: Text('No Upcoming Appointments'),
+                              title: Center(child: Text('No Upcoming Appointments')),
                             );
                           }
                         },
