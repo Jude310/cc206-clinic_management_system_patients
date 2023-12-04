@@ -1,12 +1,12 @@
-import 'dart:convert';
+// import 'dart:convert';
 import 'dart:developer' as developer;
-import 'package:cc206_clinic_management_website_patients/features/log_in/log_in_page.dart';
+// import 'package:cc206_clinic_management_website_patients/features/log_in/log_in_page.dart';
 import 'package:cc206_clinic_management_website_patients/pages/dashboard.dart';
 import 'package:cc206_clinic_management_website_patients/theme/color_theme.dart';
 import 'package:cc206_clinic_management_website_patients/utils/session/current_user.dart';
 import 'package:cc206_clinic_management_website_patients/utils/session/sessions.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 import '../components/sign_up_form_input_widget.dart';
 
 class SignUp extends StatelessWidget {
@@ -73,7 +73,7 @@ class _SignUpFormState extends State<SignUpForm> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
+  // final TextEditingController _addressController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
@@ -269,6 +269,7 @@ class _SignUpFormState extends State<SignUpForm> {
             SizedBox(
               width: constraints.maxWidth,
               child: SignUpFormInputWidget(
+                obscureText: true,
                 label: 'Password',
                 controller: _passwordController,
               ),
@@ -277,6 +278,7 @@ class _SignUpFormState extends State<SignUpForm> {
             SizedBox(
               width: constraints.maxWidth,
               child: SignUpFormInputWidget(
+                obscureText: true,
                 label: 'Confirm Password',
                 controller: _confirmPasswordController,
               ),

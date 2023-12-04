@@ -11,7 +11,9 @@ class SignUpFormInputWidget extends StatefulWidget {
   final TextEditingController? controller;
   final void Function()? onTap;
   final bool readOnly;
-  const SignUpFormInputWidget({
+  bool obscureText;
+  SignUpFormInputWidget({
+    this.obscureText = false,
     this.label = '',
     this.hintText,
     this.validator,
@@ -69,7 +71,7 @@ class _SignUpFormInputWidgetState extends State<SignUpFormInputWidget> {
           borderRadius: const BorderRadius.all(Radius.circular(20.0)),
           elevation: 10.0,
           child: TextFormField(
-
+            obscureText: widget.obscureText,
             readOnly: widget.readOnly,
             onTap: widget.onTap,
             focusNode: _focusNode,
