@@ -46,6 +46,7 @@ Future<Map<String, dynamic>> findPatient(
 
 class _PatientsWidgetState extends State<PatientsWidget> {
   late PatientsModel _model;
+  int totalAppointments = 0;
   late Future<List<Map<String, dynamic>>> patientsFuture;
   Map<String, dynamic>? selectedPatient;
   List<Map<String, dynamic>>? appointmentHistory = [];
@@ -89,6 +90,64 @@ class _PatientsWidgetState extends State<PatientsWidget> {
     _model.textController9 ??= TextEditingController();
     _model.textFieldFocusNode9 ??= FocusNode();
     fetchPatients();
+    fetchTotalAppointmentsNumber();
+  }
+
+  void _submitForm() async {
+    try {
+      // Retrieve values from text controllers
+      String lastName = _model.textController1.text;
+      String firstName = _model.textController2.text;
+      String middleName = _model.textController3.text;
+      String suffix = _model.textController4.text;
+      DateTime birthDate = _model.textController5.text.isNotEmpty
+          ? DateTime.parse(_model.textController5.text)
+          : DateTime.now(); // Provide a default value, replace with your logic
+      String sex = _model.dropDownValue!;
+      String height = _model.textController7.text;
+      String age = _model.textController6.text;
+      String weight = _model.textController8.text;
+
+      // Convert birthdate value to the desired format (if not null)
+      String? formattedBirthDate =
+          DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(birthDate) ?? '';
+
+      Map<String, dynamic> patientData = {
+        'patientLName': lastName,
+        'patientFName': firstName,
+        'patientMName': middleName,
+        'patientSuffix': suffix,
+        'patientBirthDate': formattedBirthDate,
+        'patientSex': sex,
+        'patientHeight': double.tryParse(height) ?? 0.0,
+        'patientAge': int.tryParse(age) ?? 0,
+        'patientWeight': double.tryParse(weight) ?? 0.0,
+      };
+
+      // Convert the map to JSON
+      String jsonData = jsonEncode(patientData);
+
+      // Send a POST request to your server
+      final response = await http.post(
+        Uri.parse('http://localhost:3001/patients'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonData,
+      );
+
+      // Check the response status
+      if (response.statusCode == 201) {
+        print('Patient data sent successfully');
+        print(response.body); // Optional: Print the response body
+      } else {
+        print(
+            'Failed to send patient data. Status code: ${response.statusCode}');
+        print(response.body); // Optional: Print the response body for debugging
+      }
+    } catch (error) {
+      print('Error during HTTP request: $error');
+    }
   }
 
   String formatDateTime(String? dateString) {
@@ -240,6 +299,27 @@ class _PatientsWidgetState extends State<PatientsWidget> {
         );
       },
     );
+  }
+
+  Future<void> fetchTotalAppointmentsNumber() async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'http://localhost:3001/appointments/total-appointments-number'),
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        setState(() {
+          totalAppointments = data['totalAppointments'] as int;
+        });
+      } else {
+        throw Exception('Failed to load total appointments number');
+      }
+    } catch (error) {
+      // Handle errors if necessary
+      print('Error: $error');
+    }
   }
 
   @override
@@ -1562,7 +1642,7 @@ class _PatientsWidgetState extends State<PatientsWidget> {
                                                     0.0, 20.0, 0.0, 0.0),
                                             child: FFButtonWidget(
                                               onPressed: () {
-                                                print('Button pressed ...');
+                                                _submitForm();
                                               },
                                               text: 'Add Patient',
                                               options: FFButtonOptions(
@@ -1654,7 +1734,7 @@ class _PatientsWidgetState extends State<PatientsWidget> {
                                               alignment: AlignmentDirectional(
                                                   -0.65, 0.00),
                                               child: Text(
-                                                '768',
+                                                '$totalAppointments',
                                                 style: HinosaTheme.of(context)
                                                     .bodyMedium
                                                     .override(
