@@ -23,13 +23,13 @@ class Session {
     _updateCookie(response);
     return response;
   }
-  static Future patch(String path, {Object? body}) async {
+  // static Future patch(String path, { body}) async {
 
-    Uri httpUrl = Uri.http(url, path);
-    var response = await http.patch(httpUrl, body: body, headers: headers);
-    _updateCookie(response);
-    return response;
-  }
+  //   Uri httpUrl = Uri.http(url, path);
+  //   var response = await http.patch(httpUrl, body: body, headers: headers);
+  //   _updateCookie(response);
+  //   return response;
+  // }
   static Future post(String path, {dynamic body}) async {
     Uri httpUrl = Uri.http(url, path);
     var response = await http.post(httpUrl, body: body, headers: headers);
